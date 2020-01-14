@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions
+name="obtenerLugares"
+targetNamespace="urn:obtenerLugares"
+xmlns:tns="urn:obtenerLugares"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+xmlns="http://schemas.xmlsoap.org/wsdl/"
+>
+    <message name="returnlugaraleatorioRequest">
+    </message>
+    <message name="returnlugaraleatorioResponse">
+        <part name="resultado" type="xsd:string"/> 
+    </message> 
+    <message name="nuevolugarRequest">
+        <part name="nombre" type="xsd:string"/>
+        <part name="lat" type="xsd:float"/>
+        <part name="long" type="xsd:float"/>
+        <part name="alt" type="xsd:float"/>
+        <part name="tipo" type="xsd:int"/>
+        <part name="mesas" type="xsd:int"/>
+        <part name="plazas" type="xsd:int"/>
+    </message>
+    <message name="nuevolugarResponse">
+    </message>      
+    <portType name="LugarPortType">
+        <operation name="returnlugaraleatorio">
+            <input message="tns:returnlugaraleatorioRequest"/>
+            <output message="tns:returnlugaraleatorioResponse"/>
+        </operation>    
+        <operation name="nuevolugar">
+            <input message="tns:nuevolugarRequest"/>
+            <output message="tns:nuevolugarResponse"/>
+        </operation>    
+    </portType> 
+    <binding name="LugarBinding" type="tns:LugarPortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+            <operation name="returnlugaraleatorio"> <soap:operation              soapAction="http://localhost/practica_2/servidor/Lugares.php?method=returnlugaraleatorio"/>
+                <input>
+                    <soap:body    namespace="http://localhost/practica_2/clases"    use="encoded"    encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                />
+                </input>
+                <output>
+                    <soap:body    namespace="http://localhost/practica_2/clases"    use="encoded"    encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+                </output>
+            </operation>             
+            <operation name="nuevolugar"> <soap:operation   soapAction="http://localhost/practica_2/servidor/Lugares.php?method=nuevolugar"/>
+                <input>
+                    <soap:body    namespace="http://localhost/practica_2/servidor"    use="encoded"    encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                />
+                </input>
+                <output>
+                    <soap:body    namespace="http://localhost/practica_2/servidor"    use="encoded"    encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+                </output>
+            </operation>            
+    </binding>
+    <service name="WSDLService">
+        <port name="LugarPortType" binding="tns:LugarBinding">
+            <soap:address location="http://localhost/practica_2/servidor/Servidorservicio.php"/>
+        </port>
+    </service>
+</definitions>
